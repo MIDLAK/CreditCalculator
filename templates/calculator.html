@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js">
+    <title>Кредитный калькулятор</title>
+</head>
+<body>
+<div class="container px-4 py-5" id="hanging-icons">
+    <h3>
+        <a href="http://localhost:8080/">Vabank</a>
+    </h3>
+    <br>
+    <br>
+    <h4>КРЕДИТНЫЙ КАЛЬКУЛЯТОР</h4>
+    <br>
+    <form method="post">
+        <input type="date" min="1800-01-01" max="3031-12-31"
+               placeholder="Дата оформления кредита" name="date_registration" class="form-control" required><br>
+        <input type="number" step="0.01" name="credit_percent" min="0.01" max="365"
+               placeholder="Годовая процентаная ставка" class="form-control" required><br>
+        <input type="number" step="0.01" name="credit_size" min="1" max="100000000"
+               placeholder="Сумма кредита" class="form-control" required><br>
+        <h4>Порядок погашения</h4>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="repayment_procedure" value="ann" id="ann">
+            <label class="form-check-label" for="ann">
+                Аннуитетный
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="repayment_procedure" value="diff" id="diff" checked>
+            <label class="form-check-label" for="diff">
+                Дифференцированный
+            </label>
+        </div>
+        <br>
+        <input type="number" name="credit_term" min="1" max="100"
+               placeholder="Срок кредитования (в месяцах)" class="form-control" required><br>
+        <br>
+        <button type="submit" class="btn btn-success">Рассчитать</button>
+    </form>
+    <br>
+    <br>
+    <h4>ГРАФИК ВЫПЛАТ ПО КРЕДИТУ</h4>
+    <br>
+    <table class="table">
+        <tr>
+            <th>Дата</th>
+            <th>Платёж</th>
+            <th>Оплата процентов</th>
+            <th>Основной долг</th>
+            <th>Остаток</th>
+        </tr>
+        {% for pay in payments %}
+        <tr>
+            <td>{{pay[0]}}</td>
+            <td>{{pay[1]}}</td>
+            <td>{{pay[2]}}</td>
+            <td>{{pay[3]}}</td>
+            <td>{{pay[4]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    Переплата: {{ overpayment }}
+</div>
+</body>
+</html>
